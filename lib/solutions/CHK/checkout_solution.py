@@ -1,28 +1,32 @@
 import math
-price_list = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
-
+price_list = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40}
 
 def handle_multiples(count, divisor, multiby_price, sku):
     return math.floor(count/divisor) * multiby_price + \
             (count % divisor * price_list[sku])
 
 
-def validate_count(sku, count):
+def validate_count(sku, count, skus):
+    if sku == 'A' and count >= 5:
+        return handle_multiples(count, 5, 200, sku)
     if sku == 'A' and count >= 3:
         return handle_multiples(count, 3, 130, sku)
     if sku == 'B' and count >= 2:
         return handle_multiples(count, 2, 45, sku)
+    if sku == 'E' and count >= 2 and skus.contains('E'):
+        return -30
     else:
         return None
 
 
-def get_value(sku, count):
-    multiples_price = validate_count(sku, count)
+def get_value(sku, skus):
+    count = skus.count(sku)
+    multiples_price = validate_count(sku, count, skus)
     return price_list[sku] * count if multiples_price is None else multiples_price
 
 
 def get_cost(skus, values_list):
-    costs = [get_value(value, skus.count(value)) for value in values_list]
+    costs = [get_value(value, skus) for value in values_list]
     return sum(costs)
 
 
@@ -38,3 +42,17 @@ def checkout(skus):
         return -1
 
     return get_cost(skus, price_list.keys())
+
+
+print(checkout('EEB'))
+
+# Our price table and offers:
+# +------+-------+------------------------+
+# | Item | Price | Special offers         |
+# +------+-------+------------------------+
+# | A    | 50    | 3A for 130, 5A for 200 |
+# | B    | 30    | 2B for 45              |
+# | C    | 20    |                        |
+# | D    | 15    |                        |
+# | E    | 40    | 2E get one B free      |
+# +------+-------+------------------------+
