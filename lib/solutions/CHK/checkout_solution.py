@@ -1,28 +1,35 @@
 import math
 price_list = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40}
 
+
 def handle_multiples(count, divisor, multiby_price, sku):
     return math.floor(count/divisor) * multiby_price + \
             (count % divisor * price_list[sku])
 
 
-def validate_count(sku, count, skus):
+def multiby_prices(sku, count):
     if sku == 'A' and count >= 5:
         return handle_multiples(count, 5, 200, sku)
     if sku == 'A' and count >= 3:
         return handle_multiples(count, 3, 130, sku)
     if sku == 'B' and count >= 2:
         return handle_multiples(count, 2, 45, sku)
-    if sku == 'E' and count >= 2 and skus.find('E') != -1:
-        return -30
     else:
         return None
 
 
+def get_discounts(sku, count, skus):
+    if sku == 'E' and count >= 2 and skus.find('B') != -1:
+        return -30
+    else:
+        return 0
+
+
 def get_value(sku, skus):
     count = skus.count(sku)
-    multiples_price = validate_count(sku, count, skus)
-    return price_list[sku] * count if multiples_price is None else multiples_price
+    discount = get_discounts(sku, count, skus)
+    multiples_price = multiby_prices(sku, count)
+    return (price_list[sku] * count if multiples_price is None else multiples_price) + discount
 
 
 def get_cost(skus, values_list):
