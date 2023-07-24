@@ -40,18 +40,14 @@ class Item:
         else:
             return None
 
-    def get_external_deals(self, item_count, discount_cost, full_cost):
+    def get_external_deals(self, item_count, full_cost):
         # # ex_deals = {2: 'B'} key is number of items B is the item you get free
         costs = []
 
         if self.external_deals:
             for divisor, item in self.external_deals.items():
-                total_discount = 0
-                if discount_cost is not None:
-                    total_discount = discount_cost
-                if math.floor(item_count / divisor) <= 1:
-                    # Do this when divisor is a multiple of 2
-                    total_discount = math.floor(item_count / divisor) * full_cost
+
+                total_discount = math.floor(item_count / divisor) * full_cost
                 costs.append(total_discount)
                 self.has_external_discount = True
             return -min(costs)
@@ -72,7 +68,6 @@ price_list = {
 def get_discounts(sku, count, skus):
     if sku == 'E' and count >= 2 and skus.find('B') != -1:
         return price_list[sku].get_external_deals(count,
-                                                  price_list['B'].get_deals(skus.count('B')),
                                                   price_list['B'].cost
         )
     else:
@@ -111,21 +106,9 @@ def checkout(skus):
 
     return get_cost(skus, price_list.keys())
 
-print(checkout('CCADDEEBBA')) # 280
-print(checkout('EEEEBB')) # 160
+print(checkout('ABCDEABCDE')) # 280
+print(checkout('AAAAAEEBAAABB')) # 160
 
-
-
-# Our price table and offers:
-# +------+-------+------------------------+
-# | Item | Price | Special offers         |
-# +------+-------+------------------------+
-# | A    | 50    | 3A for 130, 5A for 200 |
-# | B    | 30    | 2B for 45              |
-# | C    | 20    |                        |
-# | D    | 15    |                        |
-# | E    | 40    | 2E get one B free      |
-# +------+-------+------------------------+
 
 
 
