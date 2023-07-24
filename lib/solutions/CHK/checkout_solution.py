@@ -2,16 +2,16 @@ import math
 price_list = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
 
 
-def handle_multiples(count, divisor, multiby_price):
+def handle_multiples(count, divisor, multiby_price, sku):
     return math.floor(count/divisor) * multiby_price + \
             (count % divisor * price_list[sku])
 
 
 def validate_count(sku, count):
     if sku == 'A' and count > 3:
-        return handle_multiples(count, 3, 130)
+        return handle_multiples(count, 3, 130, sku)
     if sku == 'B' and count > 2:
-        return handle_multiples(count, 2, 45)
+        return handle_multiples(count, 2, 45, sku)
     else:
         return None
 
@@ -37,7 +37,8 @@ def checkout(skus):
 
     count_instances(skus, price_list.keys())
 
-checkout('AAAABBBCDE')
+checkout('AAAAAAABBBCDE')
+
 
 
 
