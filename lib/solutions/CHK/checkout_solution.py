@@ -49,17 +49,3 @@ def checkout(skus):
         return -1
 
     return get_cost(skus, price_list.keys())
-
-
-print(checkout('EE'))
-
-# Our price table and offers:
-# +------+-------+------------------------+
-# | Item | Price | Special offers         |
-# +------+-------+------------------------+
-# | A    | 50    | 3A for 130, 5A for 200 |
-# | B    | 30    | 2B for 45              |
-# | C    | 20    |                        |
-# | D    | 15    |                        |
-# | E    | 40    | 2E get one B free      |
-# +------+-------+------------------------+
