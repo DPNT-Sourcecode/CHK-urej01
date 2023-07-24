@@ -9,20 +9,20 @@ price_list = {
 }
 
 
-def handle_multiples(count, divisor, multiby_price, sku):
-    return math.floor(count/divisor) * multiby_price + \
-            (count % divisor * price_list[sku].cost)
-
-
-def multiby_prices(sku, count):
-    if sku == 'A' and count >= 5:
-        return handle_multiples(count, 5, 200, sku)
-    if sku == 'A' and count >= 3:
-        return handle_multiples(count, 3, 130, sku)
-    if sku == 'B' and count >= 2:
-        return handle_multiples(count, 2, 45, sku)
-    else:
-        return None
+# def handle_multiples(count, divisor, multiby_price, sku):
+#     return math.floor(count/divisor) * multiby_price + \
+#             (count % divisor * price_list[sku].cost)
+#
+#
+# def multiby_prices(sku, count):
+#     if sku == 'A' and count >= 5:
+#         return handle_multiples(count, 5, 200, sku)
+#     if sku == 'A' and count >= 3:
+#         return handle_multiples(count, 3, 130, sku)
+#     if sku == 'B' and count >= 2:
+#         return handle_multiples(count, 2, 45, sku)
+#     else:
+#         return None
 
 
 def get_discounts(sku, count, skus):
@@ -35,7 +35,7 @@ def get_discounts(sku, count, skus):
 def get_value(sku, skus):
     count = skus.count(sku)
     discount = get_discounts(sku, count, skus)
-    multiples_price = multiby_prices(sku, count)
+    multiples_price = price_list[sku].get_deals(count)
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -58,5 +58,6 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 print(checkout("AAA"))
+
 
 
