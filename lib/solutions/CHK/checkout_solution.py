@@ -39,11 +39,21 @@ class Item:
             return None
 
     def get_external_deals(self, item_count, discount_item_count, discount_cost, full_cost):
-        2E's' 1B - 30   4E's' -  - 45
-        # ex_deals = {2: 'B'} key is number of items B is the item you get free
+        # 2E's' 1B - 30   4E's' -  - 45
+        # # ex_deals = {2: 'B'} key is number of items B is the item you get free
         costs = []
-
-        
+        #
+        # print(checkout('CCADDEEBBA'))
+        # print(checkout('EEEEBB'))
+        #
+        # CC - 40
+        # AA - 100
+        # DD - 30
+        # EE - 80
+        # BB - 45
+        # B - 30
+        #
+        # item_count / divisor
 
         # if math.floor(item_count / divisor) > 1:
         #     # Do this when divisor is a multiple of 2
@@ -109,12 +119,7 @@ def checkout(skus):
 print(checkout('CCADDEEBBA'))
 print(checkout('EEEEBB'))
 
-CC - 40
-AA- 100
-DD -30
-EE -80
-BB - 45
-B - 30
+
 
 # Our price table and offers:
 # +------+-------+------------------------+
@@ -126,4 +131,5 @@ B - 30
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
