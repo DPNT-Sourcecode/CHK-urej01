@@ -48,12 +48,12 @@ class Item:
         costs = []
         if self.external_deals:
             for divisor, item in self.external_deals.items():
-                costs.append(math.floor(item_count / divisor) * discount_cost)
-            print()
+                costs.append(discount_cost if discount_cost is not None else math.floor(item_count / divisor) * discount_cost)
             return -min(costs)
 
         else:
             return 0
+
 
 
 
