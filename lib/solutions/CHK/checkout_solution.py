@@ -27,15 +27,15 @@ price_list = {
 
 def get_discounts(sku, count, skus):
     if sku == 'E' and count >= 2 and skus.find('B') != -1:
-        return price_list[sku].get_external_deals(count, 30)
+        return price_list[sku].get_external_deals(count, price_list['B'].get_deals(skus.count('B')))
     else:
         return 0
 
 
 def get_value(sku, skus):
     count = skus.count(sku)
-    discount = get_discounts(sku, count, skus)
     multiples_price = price_list[sku].get_deals(count)
+    discount = get_discounts(sku, count, skus)
     print(multiples_price)
     print(discount)
     print(price_list[sku].cost * count)
@@ -61,5 +61,6 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 print(f"Checkout: {checkout('EEEEBB')}")
+
 
 
