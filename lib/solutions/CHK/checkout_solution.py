@@ -62,10 +62,10 @@ class Item:
 
 price_list = {
     'A': Item('A', 50, deals={5: 200, 3: 130}),
+    'E': Item('E', 40,  ex_deals={2: 'B'}),
     'B': Item('B', 30, deals={2: 45}),
     'C': Item('C', 20),
     'D': Item('D', 15,),
-    'E': Item('E', 40,  ex_deals={2: 'B'})
 }
 
 
@@ -81,7 +81,10 @@ def get_discounts(sku, count, skus):
 
 def get_value(sku, skus):
     count = skus.count(sku)
-    multiples_price = price_list[sku].get_deals(count)
+    if sku == 'B' and price_list['E'].has_external_discount:
+        multiples_price = None
+    else:
+        multiples_price = price_list[sku].get_deals(count)
     discount = get_discounts(sku, count, skus)
     print(f'sku {sku}')
     print(f'multiples_price {multiples_price}')
@@ -123,5 +126,6 @@ print(checkout('EEEEBB')) # 160
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
 
