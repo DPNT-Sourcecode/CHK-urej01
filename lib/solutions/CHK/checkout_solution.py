@@ -114,8 +114,8 @@ def checkout(skus):
 
     return get_cost(skus, price_list.keys())
 
-print(checkout('CCADDEEBBA'))
-print(checkout('EEEEBB'))
+print(checkout('CCADDEEBBA')) -- 280
+print(checkout('EEEEBB')) -- 160
 
 
 
@@ -129,7 +129,3 @@ print(checkout('EEEEBB'))
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
-
-
-
-
