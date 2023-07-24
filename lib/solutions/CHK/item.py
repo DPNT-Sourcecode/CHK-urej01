@@ -9,3 +9,8 @@ class Item:
         self.cost = cost
         self.self_deals = deals
         self.external_deals = ex_deals
+
+    def get_price(self):
+        return cost
+
+
