@@ -40,6 +40,3 @@ def checkout(skus):
         return -1
 
     return get_cost(skus, price_list.keys())
-
-
-print(checkout("ABCa"))
