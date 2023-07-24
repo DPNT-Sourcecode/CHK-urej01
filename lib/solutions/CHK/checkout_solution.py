@@ -22,10 +22,11 @@ def get_value(sku, count):
 
 
 def count_instances(skus, values_list):
-    print(values_list)
-    for value in values_list:
-        print(get_value(value, skus.count(value)))
-        # return skus.count(value)
+
+    costs = [get_value(value, skus.count(value)) for value in values_list]
+    print(costs)
+    print(sum(costs))
+    return sum(costs)
 
 
 # noinspection PyUnusedLocal
@@ -37,10 +38,10 @@ def checkout(skus):
 
     count_instances(skus, price_list.keys())
 
-checkout('AAAAAAABBBCDE')
 
 
 
+checkout('AAAAAABBBCCD')
 
 
 
