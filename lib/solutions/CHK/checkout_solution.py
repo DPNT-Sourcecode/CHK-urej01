@@ -8,9 +8,9 @@ def handle_multiples(count, divisor, multiby_price, sku):
 
 
 def validate_count(sku, count):
-    if sku == 'A' and count > 3:
+    if sku == 'A' and count >= 3:
         return handle_multiples(count, 3, 130, sku)
-    if sku == 'B' and count > 2:
+    if sku == 'B' and count >= 2:
         return handle_multiples(count, 2, 45, sku)
     else:
         return None
@@ -34,11 +34,7 @@ def validate_value(skus, validate_list):
 # skus = unicode string
 def checkout(skus):
 
-    if not skus.isalpha():
-        return -1
     if not validate_value(skus, price_list.keys()):
         return -1
 
     return get_cost(skus, price_list.keys())
-
-print(checkout("ABBBBc"))
