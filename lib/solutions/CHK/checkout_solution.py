@@ -57,13 +57,12 @@ class Item:
         if self.external_deals:
             for divisor, item in self.external_deals.items():
 
+                if discount_cost is not None:
+                    total_discount = math.floor(item_count / divisor) * discount_cost
                 if math.floor(item_count / divisor) <= 2:
                     # Do this when divisor is a multiple of 2
                     total_discount = full_cost
-                if math.floor(item_count / divisor) > 2:
-                    total_discount = discount_cost
-
-                costs.append(discount_cost if discount_cost is not None else math.floor(item_count / divisor) * discount_cost)
+                costs.append(total_discount)
             return -min(costs)
 
         else:
@@ -130,6 +129,7 @@ print(checkout('EEEEBB'))
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
 
 
