@@ -59,7 +59,7 @@ class Item:
 
                 if discount_cost is not None:
                     total_discount = math.floor(item_count / divisor) * discount_cost
-                if math.floor(item_count / divisor) <= 2:
+                if math.floor(item_count / divisor) <= 1:
                     # Do this when divisor is a multiple of 2
                     total_discount = full_cost
                 costs.append(total_discount)
@@ -92,7 +92,9 @@ def get_value(sku, skus):
     count = skus.count(sku)
     multiples_price = price_list[sku].get_deals(count)
     discount = get_discounts(sku, count, skus)
-
+    print(f'sku {sku}')
+    print(f'multiples_price {multiples_price}')
+    print(f'discount {discount}')
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -114,8 +116,8 @@ def checkout(skus):
 
     return get_cost(skus, price_list.keys())
 
-print(checkout('CCADDEEBBA')) -- 280
-print(checkout('EEEEBB')) -- 160
+print(checkout('CCADDEEBBA')) # 280
+print(checkout('EEEEBB')) # 160
 
 
 
