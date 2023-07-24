@@ -38,10 +38,15 @@ class Item:
         else:
             return None
 
-    def get_external_deals(self, item_count, discount_cost):
+    def get_external_deals(self, item_count, discount_cost, full_cost):
 
         # ex_deals = {2: 'B'} key is number of items B is the item you get free
         costs = []
+
+        if item_count == 2:
+            total_discount = discount_cost
+        else:
+            total_discount = full_cost
         if self.external_deals:
             for divisor, item in self.external_deals.items():
                 costs.append(discount_cost if discount_cost is not None else math.floor(item_count / divisor) * discount_cost)
@@ -62,7 +67,7 @@ price_list = {
 
 def get_discounts(sku, count, skus):
     if sku == 'E' and count >= 2 and skus.find('B') != -1:
-        return price_list[sku].get_external_deals(count, price_list['B'].get_deals(skus.count('B')))
+        return price_list[sku].get_external_deals(count, price_list['B'].get_deals(skus.count('B')), price_list['B'].cost)
     else:
         return 0
 
