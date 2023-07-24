@@ -12,6 +12,7 @@ class Item:
         self.cost = cost
         self.self_deals = deals
         self.external_deals = ex_deals
+        self.has_external_discount = False
 
     def get_deals(self, item_count):
         costs = []
@@ -34,25 +35,14 @@ class Item:
 
             for divisor, multiby_price in self.self_deals.items():
                 costs.append(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
+
             return min(costs)
         else:
             return None
 
-    def get_external_deals(self, item_count, discount_item_count, discount_cost, full_cost):
-        # 2E's' 1B - 30   4E's' -  - 45
+    def get_external_deals(self, item_count, discount_cost, full_cost):
         # # ex_deals = {2: 'B'} key is number of items B is the item you get free
         costs = []
-        #
-        # print(checkout('CCADDEEBBA'))
-        # print(checkout('EEEEBB'))
-        #
-        # CC - 40
-        # AA - 100
-        # DD - 30
-        # EE - 80
-        # BB - 45
-        # B - 30
-        #
 
         if self.external_deals:
             for divisor, item in self.external_deals.items():
@@ -63,6 +53,7 @@ class Item:
                     # Do this when divisor is a multiple of 2
                     total_discount = math.floor(item_count / divisor) * full_cost
                 costs.append(total_discount)
+                self.has_external_discount = True
             return -min(costs)
 
         else:
@@ -82,8 +73,8 @@ def get_discounts(sku, count, skus):
     if sku == 'E' and count >= 2 and skus.find('B') != -1:
         return price_list[sku].get_external_deals(count,
                                                   skus.count('B'),
-                                                  price_list['B'].get_deals(skus.count('B')),
-                                                  price_list['B'].cost)
+                                                  price_list['B'].cost
+        )
     else:
         return 0
 
@@ -132,4 +123,5 @@ print(checkout('EEEEBB')) # 160
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
