@@ -62,7 +62,7 @@ class Item:
 
 price_list = {
     'A': Item('A', 50, deals={5: 200, 3: 130}),
-    'E': Item('E', 40,  ex_deals={2: 'B'}),
+    'E': Item('E', 40, ex_deals={2: 'B'}),
     'B': Item('B', 30, deals={2: 45}),
     'C': Item('C', 20),
     'D': Item('D', 15,),
@@ -72,7 +72,7 @@ price_list = {
 def get_discounts(sku, count, skus):
     if sku == 'E' and count >= 2 and skus.find('B') != -1:
         return price_list[sku].get_external_deals(count,
-                                                  skus.count('B'),
+                                                  price_list['B'].get_deals(skus.count('B')),
                                                   price_list['B'].cost
         )
     else:
@@ -126,6 +126,7 @@ print(checkout('EEEEBB')) # 160
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
 
 
