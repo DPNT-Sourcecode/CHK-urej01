@@ -13,7 +13,7 @@ def validate_count(sku, count, skus):
         return handle_multiples(count, 3, 130, sku)
     if sku == 'B' and count >= 2:
         return handle_multiples(count, 2, 45, sku)
-    if sku == 'E' and count >= 2 and skus.contains('E'):
+    if sku == 'E' and count >= 2 and skus.find('E') != -1:
         return -30
     else:
         return None
@@ -44,7 +44,7 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 
-print(checkout('EEB'))
+print(checkout('EE'))
 
 # Our price table and offers:
 # +------+-------+------------------------+
