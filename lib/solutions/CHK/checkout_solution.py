@@ -34,9 +34,11 @@ def validate_value(skus, validate_list):
 # skus = unicode string
 def checkout(skus):
 
-    if skus.isalpha():
+    if not skus.isalpha():
         return -1
     if not validate_value(skus, price_list.keys()):
         return -1
 
     return get_cost(skus, price_list.keys())
+
+print(checkout("ABBBBc"))
