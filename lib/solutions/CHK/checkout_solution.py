@@ -1,5 +1,12 @@
 import math
-price_list = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40}
+from item import Item
+price_list = {
+    'A': Item('A', 50, {5: 200, 3: 130}),
+    'B': Item('A', 30, {2: 45}),
+    'C': Item('C', 20),
+    'D': Item('D', 15,),
+    'E': Item('E', 40,  ex_deals={2: 'B'})
+}
 
 
 def handle_multiples(count, divisor, multiby_price, sku):
@@ -49,3 +56,4 @@ def checkout(skus):
         return -1
 
     return get_cost(skus, price_list.keys())
+
