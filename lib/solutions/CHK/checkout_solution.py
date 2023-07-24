@@ -56,12 +56,12 @@ class Item:
 
         if self.external_deals:
             for divisor, item in self.external_deals.items():
-
+                total_discount = 0
                 if discount_cost is not None:
-                    total_discount = math.floor(item_count / divisor) * discount_cost
+                    total_discount = discount_cost
                 if math.floor(item_count / divisor) <= 1:
                     # Do this when divisor is a multiple of 2
-                    total_discount = full_cost
+                    total_discount = math.floor(item_count / divisor) * full_cost
                 costs.append(total_discount)
             return -min(costs)
 
@@ -95,6 +95,7 @@ def get_value(sku, skus):
     print(f'sku {sku}')
     print(f'multiples_price {multiples_price}')
     print(f'discount {discount}')
+    print(f'total price {price_list[sku].cost * count}')
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -131,3 +132,4 @@ print(checkout('EEEEBB')) # 160
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
