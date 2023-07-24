@@ -1,3 +1,4 @@
+import math
 class Item:
 
     name = ""
@@ -17,14 +18,15 @@ class Item:
         costs = []
         print(self.self_deals)
         if self.self_deals:
-            for divisor, multiby_price in self.self_deals:
+            for divisor, multiby_price in self.self_deals.items():
                 print(divisor)
                 print(multiby_price)
-                costs.add(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
+                costs.append(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
 
             return min(costs)
         else:
             return None
+
 
 
 
