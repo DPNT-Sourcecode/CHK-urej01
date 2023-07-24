@@ -1,5 +1,56 @@
 import math
-from item import Item
+
+
+class Item:
+
+    name = ""
+    cost = 0
+    deals = []
+
+    def __init__(self, name, cost, deals=None, ex_deals=None):
+        self.name = name
+        self.cost = cost
+        self.self_deals = deals
+        self.external_deals = ex_deals
+
+    def get_deals(self, item_count):
+        costs = []
+
+        if self.self_deals:
+
+            if len(self.self_deals.keys()) > 1 and item_count >= sum(self.self_deals.keys()):
+                # do combo price
+                max_divisor = max(self.self_deals.keys())
+                min_divisor = min(self.self_deals.keys())
+
+                base_price = math.floor(item_count / max_divisor) * self.self_deals[max_divisor]
+
+                remainder_count = item_count % max_divisor
+                remainder_price = math.floor(remainder_count / min_divisor) * self.self_deals[min_divisor]
+
+                leftover_count = (remainder_count % min_divisor) * self.cost
+
+                costs.append(base_price + remainder_price + leftover_count)
+
+            for divisor, multiby_price in self.self_deals.items():
+                costs.append(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
+            return min(costs)
+        else:
+            return None
+
+    def get_external_deals(self, item_count, discount_cost):
+
+        # ex_deals = {2: 'B'} key is number of items B is the item you get free
+        costs = []
+        if self.external_deals:
+            for divisor, item in self.external_deals.items():
+                costs.append(discount_cost if discount_cost is not None else math.floor(item_count / divisor) * discount_cost)
+            return -min(costs)
+
+        else:
+            return 0
+
+
 price_list = {
     'A': Item('A', 50, deals={5: 200, 3: 130}),
     'B': Item('B', 30, deals={2: 45}),
@@ -7,22 +58,6 @@ price_list = {
     'D': Item('D', 15,),
     'E': Item('E', 40,  ex_deals={2: 'B'})
 }
-
-
-# def handle_multiples(count, divisor, multiby_price, sku):
-#     return math.floor(count/divisor) * multiby_price + \
-#             (count % divisor * price_list[sku].cost)
-#
-#
-# def multiby_prices(sku, count):
-#     if sku == 'A' and count >= 5:
-#         return handle_multiples(count, 5, 200, sku)
-#     if sku == 'A' and count >= 3:
-#         return handle_multiples(count, 3, 130, sku)
-#     if sku == 'B' and count >= 2:
-#         return handle_multiples(count, 2, 45, sku)
-#     else:
-#         return None
 
 
 def get_discounts(sku, count, skus):
@@ -36,9 +71,7 @@ def get_value(sku, skus):
     count = skus.count(sku)
     multiples_price = price_list[sku].get_deals(count)
     discount = get_discounts(sku, count, skus)
-    # print(multiples_price)
-    # print(discount)
-    # print(price_list[sku].cost * count)
+
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -60,7 +93,6 @@ def checkout(skus):
 
     return get_cost(skus, price_list.keys())
 
-print(f"Checkout: {checkout('ABCDECBAABCABBAAAEEAA')}")
 
 
 
