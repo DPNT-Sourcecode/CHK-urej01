@@ -21,12 +21,13 @@ def get_value(sku, count):
     return price_list[sku] * count if multiples_price is None else multiples_price
 
 
-def count_instances(skus, values_list):
-
+def get_cost(skus, values_list):
     costs = [get_value(value, skus.count(value)) for value in values_list]
-    print(costs)
-    print(sum(costs))
     return sum(costs)
+
+
+def validate_value(skus, validate_list):
+    return all(sku in validate_list for sku in skus)
 
 
 # noinspection PyUnusedLocal
@@ -35,13 +36,14 @@ def checkout(skus):
 
     if len(skus) < 1 or not skus.isalpha():
         return -1
+    if not validate_value(skus, price_list.keys()):
+        return -1
 
-    count_instances(skus, price_list.keys())
+    return get_cost(skus, price_list.keys())
+
+checkout('AABCC')
 
 
-
-
-checkout('AAAAAABBBCCD')
 
 
 
