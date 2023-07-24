@@ -15,10 +15,14 @@ class Item:
 
     def get_deals(self, item_count):
         costs = []
-        for divisor, multiby_price in deals:
-            costs.add(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
+        if self.deals:
+            for divisor, multiby_price in self.deals:
+                costs.add(math.floor(item_count / divisor) * multiby_price + (item_count % divisor * self.cost))
 
-        return min(costs)
+            return min(costs)
+        else:
+            return None
+
 
 
 

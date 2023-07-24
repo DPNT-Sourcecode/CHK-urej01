@@ -36,6 +36,7 @@ def get_value(sku, skus):
     count = skus.count(sku)
     discount = get_discounts(sku, count, skus)
     multiples_price = price_list[sku].get_deals(count)
+    print(multiples_price)
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -58,6 +59,7 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 print(checkout("AAA"))
+
 
 
 
