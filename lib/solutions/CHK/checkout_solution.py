@@ -53,17 +53,16 @@ class Item:
         # BB - 45
         # B - 30
         #
-        # item_count / divisor
 
-        # if math.floor(item_count / divisor) > 1:
-        #     # Do this when divisor is a multiple of 2
-        #     total_discount = discount_cost
-        # else:
-        #     # When it isn't we take off the original price
-        #     total_discount = full_cost
-        # if there's a remainder?
         if self.external_deals:
             for divisor, item in self.external_deals.items():
+
+                if math.floor(item_count / divisor) <= 2:
+                    # Do this when divisor is a multiple of 2
+                    total_discount = full_cost
+                if math.floor(item_count / divisor) > 2:
+                    total_discount = discount_cost
+
                 costs.append(discount_cost if discount_cost is not None else math.floor(item_count / divisor) * discount_cost)
             return -min(costs)
 
@@ -131,5 +130,6 @@ print(checkout('EEEEBB'))
 # | D    | 15    |                        |
 # | E    | 40    | 2E get one B free      |
 # +------+-------+------------------------+
+
 
 
