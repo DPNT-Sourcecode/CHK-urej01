@@ -19,14 +19,20 @@ class Item:
             if len(self.self_deals.keys()) > 1 and item_count >= sum(self.self_deals.keys()):
                 # do combo price
                 max_divisor = max(self.self_deals.keys())
-                min_divisor = max(self.self_deals.keys())
+                min_divisor = min(self.self_deals.keys())
 
                 base_price = math.floor(item_count / max_divisor) * self.self_deals[max_divisor]
+                print(f'base price {base_price}')
 
                 remainder_count = item_count % max_divisor
                 remainder_price = math.floor(remainder_count / min_divisor) * self.self_deals[min_divisor]
+                print(f' remainder_count {remainder_count}')
+                print(f' min_divisor {min_divisor}')
+                print(f' self.self_deals[min_divisor] {self.self_deals[min_divisor]}')
+                print(f' remainder_price {remainder_price}')
 
-                leftover_count = remainder_count % min_divisor
+                leftover_count =(remainder_count % min_divisor) * self.cost
+                print(f' leftover_count {leftover_count}')
 
                 costs.append(base_price + remainder_price + leftover_count)
 
@@ -38,5 +44,6 @@ class Item:
 
     def get_external_deals(self, item_count):
         return
+
 
 
