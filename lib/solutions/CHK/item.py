@@ -49,11 +49,12 @@ class Item:
         if self.external_deals:
             for divisor, item in self.external_deals.items():
                 costs.append(math.floor(item_count / divisor) * discount_cost)
-
-            return min(costs)
+            print()
+            return -min(costs)
 
         else:
             return 0
+
 
 
 

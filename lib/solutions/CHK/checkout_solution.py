@@ -2,7 +2,7 @@ import math
 from item import Item
 price_list = {
     'A': Item('A', 50, deals={5: 200, 3: 130}),
-    'B': Item('A', 30, deals={2: 45}),
+    'B': Item('B', 30, deals={2: 45}),
     'C': Item('C', 20),
     'D': Item('D', 15,),
     'E': Item('E', 40,  ex_deals={2: 'B'})
@@ -38,6 +38,7 @@ def get_value(sku, skus):
     multiples_price = price_list[sku].get_deals(count)
     print(multiples_price)
     print(discount)
+    print(price_list[sku].cost * count)
     return (price_list[sku].cost * count if multiples_price is None else multiples_price) + discount
 
 
@@ -60,4 +61,5 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 print(checkout("EEEEBB"))
+
 
