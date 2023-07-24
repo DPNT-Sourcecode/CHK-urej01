@@ -22,17 +22,17 @@ class Item:
                 min_divisor = min(self.self_deals.keys())
 
                 base_price = math.floor(item_count / max_divisor) * self.self_deals[max_divisor]
-                print(f'base price {base_price}')
+                # print(f'base price {base_price}')
 
                 remainder_count = item_count % max_divisor
                 remainder_price = math.floor(remainder_count / min_divisor) * self.self_deals[min_divisor]
-                print(f' remainder_count {remainder_count}')
-                print(f' min_divisor {min_divisor}')
-                print(f' self.self_deals[min_divisor] {self.self_deals[min_divisor]}')
-                print(f' remainder_price {remainder_price}')
+                # print(f' remainder_count {remainder_count}')
+                # print(f' min_divisor {min_divisor}')
+                # print(f' self.self_deals[min_divisor] {self.self_deals[min_divisor]}')
+                # print(f' remainder_price {remainder_price}')
 
-                leftover_count =(remainder_count % min_divisor) * self.cost
-                print(f' leftover_count {leftover_count}')
+                leftover_count = (remainder_count % min_divisor) * self.cost
+                # print(f' leftover_count {leftover_count}')
 
                 costs.append(base_price + remainder_price + leftover_count)
 
@@ -42,8 +42,18 @@ class Item:
         else:
             return None
 
-    def get_external_deals(self, item_count):
-        return
+    def get_external_deals(self, item_count, discount_cost):
+
+        # ex_deals = {2: 'B'} key is number of items B is the item you get free
+        costs = []
+        if self.external_deals:
+            for divisor, item in self.external_deals.items():
+                costs.append(math.floor(item_count / divisor) * discount_cost)
+
+            return min(costs)
+
+        else:
+            return 0
 
 
 
