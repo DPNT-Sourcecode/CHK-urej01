@@ -1,8 +1,8 @@
 import math
 from item import Item
 price_list = {
-    'A': Item('A', 50, {5: 200, 3: 130}),
-    'B': Item('A', 30, {2: 45}),
+    'A': Item('A', 50, deals=[5: 200, 3: 130}),
+    'B': Item('A', 30, deals={2: 45}),
     'C': Item('C', 20),
     'D': Item('D', 15,),
     'E': Item('E', 40,  ex_deals={2: 'B'})
@@ -59,6 +59,7 @@ def checkout(skus):
     return get_cost(skus, price_list.keys())
 
 print(checkout("AAA"))
+
 
 
 
